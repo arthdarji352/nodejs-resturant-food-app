@@ -1,7 +1,18 @@
 const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const dotenv = require("dotenv");
+
+//dotenv config
+dotenv.config();
 
 //rest obj
 const app = express();
+
+//middlewares
+app.use(cors());
+app.use(express.json());
+app.use(morgan("dev"));
 
 //route
 app.get("/", (req, res) => {
@@ -9,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 //PORT
-const PORT = 8080;
+const PORT = process.env.PORT || 500;
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);

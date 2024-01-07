@@ -15,12 +15,13 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //route
+app.use("/api/v1/test", require("./routes/testRoute"));
 app.get("/", (req, res) => {
   return res.status(200).send("<h1>Welcome to food server</h1>");
 });
 
 //PORT
-const PORT = process.env.PORT || 500;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);

@@ -19,7 +19,7 @@ const registerController = async (req, res) => {
     if (exitingUser) {
       return res.status(500).send({
         success: false,
-        message: "email Already Registerd please Login",
+        message: "email Already Register please Login",
       });
     }
     //password hashing

@@ -160,9 +160,29 @@ const updatePasswordController = async (req, res) => {
   }
 };
 
+//delet account
+const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await userModel.findByIdAndDelete(id);
+    res.status(200).send({
+      success: true,
+      message: "Your Account has been deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error in delete user api",
+      error,
+    });
+  }
+};
+
 module.exports = {
   getUserController,
   updateUserController,
   resetPasswordController,
   updatePasswordController,
+  deleteUserController,
 };

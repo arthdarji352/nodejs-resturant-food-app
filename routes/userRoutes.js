@@ -3,6 +3,7 @@ const {
   getUserController,
   updateUserController,
   resetPasswordController,
+  updatePasswordController,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -13,7 +14,7 @@ router.get("/getUser", authMiddleware, getUserController);
 //update user
 router.put("/updateUser", authMiddleware, updateUserController);
 //password update
-// router.post("/updatePassword", authMiddleware, updatePasswordController);
+router.post("/updatePassword", authMiddleware, updatePasswordController);
 //reset password
 router.post("/resetPassword", authMiddleware, resetPasswordController);
 module.exports = router;

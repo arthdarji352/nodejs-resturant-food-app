@@ -49,7 +49,7 @@ const resturantSchema = new mongoose.Schema(
       latitudeDelta: { type: Number },
       longitude: { type: Number },
       longitudeDelta: { type: Number },
-      address: { type: Number },
+      address: { type: String },
       title: { type: String },
     },
   },

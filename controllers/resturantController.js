@@ -54,4 +54,63 @@ const createResturantController = async (req, res) => {
   }
 };
 
-module.exports = { createResturantController };
+//get resturant
+const getAllResturantController = async (req, res) => {
+  try {
+    const resturants = await resturantModel.find({});
+
+    if (!resturants) {
+      res.status(404).send({
+        success: false,
+        message: "No Resturant available",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "get All Resturant list successfully",
+      totalCount: resturants.length,
+      resturants,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error in get Resturants list api",
+      error,
+    });
+  }
+};
+
+//get resturant by ID
+const getResturantByIdController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const resturant = await resturantModel.findById(id);
+    if (!resturant) {
+      res.status(404).send({
+        success: false,
+        message: "Resturant not found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "get All Resturant list successfully",
+      resturant,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "error in get Resturant by id api",
+      error,
+    });
+  }
+};
+
+module.exports = {
+  createResturantController,
+  getAllResturantController,
+  getResturantByIdController,
+};

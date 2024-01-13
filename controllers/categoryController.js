@@ -22,7 +22,7 @@ const createCateController = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "error in Create Resturant api",
+      message: "error in Create Category api",
       error,
     });
   }

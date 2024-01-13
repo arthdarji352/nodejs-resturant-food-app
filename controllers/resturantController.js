@@ -109,6 +109,7 @@ const getResturantByIdController = async (req, res) => {
   }
 };
 
+//delete resturant
 const deleteResturantController = async (req, res) => {
   try {
     const resturantId = req.params.id;
@@ -133,9 +134,70 @@ const deleteResturantController = async (req, res) => {
   }
 };
 
+//UPDATE RESTURANT
+const updateResturantController = async (req, res) => {
+  try {
+    const resturantId = req.params.id;
+    const resturant = await resturantModel.findById(resturantId);
+    if (!resturant) {
+      return res.status(404).send({
+        success: false,
+        message: "Resturant not found",
+      });
+    }
+
+    const {
+      title,
+      imageUrl,
+      time,
+      foods,
+      pickup,
+      delivery,
+      isOpen,
+      rating,
+      ratingCount,
+      code,
+      coords,
+    } = req.body;
+
+    //validation
+    if (!title || !coords) {
+      return res.status(500).send({
+        success: false,
+        message: "Please provide title and address",
+      });
+    }
+
+    if (title) resturant.title = title;
+    if (imageUrl) resturant.imageUrl = imageUrl;
+    if (time) resturant.time = time;
+    if (foods) resturant.foods = foods;
+    if (pickup) resturant.pickup = pickup;
+    if (delivery) resturant.delivery = delivery;
+    if (isOpen) resturant.isOpen = isOpen;
+    if (rating) resturant.rating = rating;
+    if (ratingCount) resturant.ratingCount = ratingCount;
+    if (code) resturant.code = code;
+    if (coords) resturant.coords = coords;
+
+    await resturant.save();
+    res.status(201).send({
+      success: true,
+      message: "Resturant Update Successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "error in update Resturant api",
+      error,
+    });
+  }
+};
+
 module.exports = {
   createResturantController,
   getAllResturantController,
   getResturantByIdController,
   deleteResturantController,
+  updateResturantController,
 };

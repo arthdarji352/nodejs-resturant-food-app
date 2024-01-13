@@ -97,7 +97,7 @@ const getResturantByIdController = async (req, res) => {
 
     res.status(200).send({
       success: true,
-      message: "get All Resturant list successfully",
+      message: "get Resturant successfully",
       resturant,
     });
   } catch (error) {

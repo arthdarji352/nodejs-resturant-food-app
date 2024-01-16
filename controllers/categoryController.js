@@ -80,8 +80,68 @@ const getAllCateController = async (req, res) => {
   }
 };
 
+//update category
+const upateCateController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, imageUrl } = req.body;
+
+    const updatedCategory = await categoryModel.findByIdAndUpdate(
+      id,
+      { title, imageUrl },
+      { new: true }
+    );
+    if (!updatedCategory) {
+      res.status(404).send({
+        success: false,
+        message: "No category found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "category updated successfully",
+      updatedCategory,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "error in update category api",
+      error,
+    });
+  }
+};
+//update category
+const deleteCateController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedCategory = await categoryModel.findByIdAndDelete(id);
+    if (!deletedCategory) {
+      res.status(404).send({
+        success: false,
+        message: "No categories found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "category deleted successfully",
+      deletedCategory,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "error in delete category api",
+      error,
+    });
+  }
+};
+
 module.exports = {
   createCateController,
   getAllCateController,
   getCateController,
+  upateCateController,
+  deleteCateController,
 };

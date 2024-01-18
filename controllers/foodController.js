@@ -233,7 +233,7 @@ const deleteFoodController = async (req, res) => {
 };
 
 //place order
-const placeOrderController = (req, res) => {
+const placeOrderController = async (req, res) => {
   try {
     const { cart } = req.body;
     if (!cart) {
@@ -253,6 +253,8 @@ const placeOrderController = (req, res) => {
       buyer: req.body.id,
     });
 
+    await newOrder.save();
+
     res.status(201).send({
       success: true,
       message: "order placed successfully",
@@ -267,6 +269,43 @@ const placeOrderController = (req, res) => {
     });
   }
 };
+
+const orderStatusController = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    if (!orderId) {
+      return res.status(404).send({
+        success: false,
+        message: "please Provide valid Orde Id",
+      });
+    }
+    const { status } = req.body;
+    if (!status) {
+      return res.status(404).send({
+        success: false,
+        message: "please Provide status",
+      });
+    }
+    const order = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+
+    await order.save();
+    res.status(200).send({
+      success: true,
+      message: "Order status Updated",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Eror In order status APi",
+      error,
+    });
+  }
+};
 module.exports = {
   createFoodController,
   getAllFoodsController,
@@ -275,4 +314,5 @@ module.exports = {
   updateFoodController,
   deleteFoodController,
   placeOrderController,
+  orderStatusController,
 };
